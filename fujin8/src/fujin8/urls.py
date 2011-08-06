@@ -15,6 +15,10 @@ urlpatterns = patterns('',
     (r'^time/json$', 'fujin8.views.timestamp'),
     
     url(r'^polls/', include('polls.urls')),
+    # url(r'^sinaweibo/', include('sinaweibo.urls')),
+    url(r'^login/$', 'fujin8.account.views.login', name='log'),
+    url(r'^logincheck/$', 'fujin8.account.views.login_check', name='logcheck'),
+    url(r'^logout/$', 'fujin8.account.views.logout', name='logout'),
     
     # url(r'^fujin8/', include('fujin8.foo.urls')),
 

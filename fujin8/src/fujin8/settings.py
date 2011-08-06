@@ -100,6 +100,11 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -134,6 +139,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'fujin8',
     'fujin8.polls',
+    'fujin8.account',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -158,4 +164,7 @@ LOGGING = {
         },
     }
 }
+
+AUTH_PROFILE_MODULE = 'account.UserProfile'
+
 

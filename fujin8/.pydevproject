@@ -11,6 +11,6 @@
 <value>fujin8.settings</value>
 </pydev_variables_property>
 <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
-<path>/fujin8/src</path>
+<path>/fujin8/src/fujin8</path>
 </pydev_pathproperty>
 </pydev_project>

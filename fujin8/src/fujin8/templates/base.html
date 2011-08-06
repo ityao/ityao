@@ -51,9 +51,15 @@
 					<li>
 						<a href="setting.html" id="nav_setting" accesskey="h">设置</a>
 					</li>
+					{% if user.is_authenticated %}
 					<li>
-						<a href="exit.html" id="nav_exit" accesskey="h">退出</a>
+						<a href="/logout">用户名:{{user.first_name}}</a>
 					</li>
+					{% else %}
+					<li>
+						<a href="/login">新浪微博登陆</a>
+					</li>
+					{% endif %}					
 				</ul>	
 			</nav>
 		</div>
