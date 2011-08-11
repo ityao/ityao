@@ -12,7 +12,19 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',     # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'cnflexor_fujin8',                # Or path to database file if using sqlite3.
+        'USER': 'cnflexor_fujin8',                # Not used with sqlite3.
+        'PASSWORD': 'fujin8pwd',                  # Not used with sqlite3.
+        'HOST': '127.0.0.1',                  # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '3306',                           # Set to empty string for default. Not used with sqlite3.
+    }
+}
 
+'''
+#local database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
@@ -23,7 +35,7 @@ DATABASES = {
         'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-
+'''
 
 
 # Local time zone for this installation. Choices can be found here:
@@ -133,13 +145,12 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'fujin8',
     'fujin8.polls',
     'fujin8.account',
+    'fujin8.btfactory',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -147,6 +158,7 @@ INSTALLED_APPS = (
 # the site admins on every HTTP 500 error.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
+'''
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -154,7 +166,11 @@ LOGGING = {
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
+        'console':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+        },
     },
     'loggers': {
         'django.request': {
@@ -162,6 +178,51 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+    }
+}
+'''
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'null': {
+            'level':'DEBUG',
+            'class':'django.utils.log.NullHandler',
+        },
+        'console':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            #'filters': ['special']
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers':['null'],
+            'propagate': True,
+            'level':'INFO',
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'fujin8.btfactory.views': {
+            'handlers': ['console', 'mail_admins'],
+            'level': 'INFO',            
+        }
     }
 }
 

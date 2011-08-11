@@ -1,0 +1,9 @@
+{% if parsed_daily_list %}
+    <ul>
+    {% for dailylink in parsed_daily_list %}
+        <li><a href="/polls/{{ dailylink.id }}/">{{ dailylink.link }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No daily links are available.</p>
+{% endif %}

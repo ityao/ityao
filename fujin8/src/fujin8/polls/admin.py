@@ -1,4 +1,4 @@
-from fujin8.polls.models import Poll,Choice
+from models import Poll,Choice
 from django.contrib import admin
 
 class ChoiceInline(admin.StackedInline):

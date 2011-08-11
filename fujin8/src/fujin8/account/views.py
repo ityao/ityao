@@ -87,14 +87,13 @@ def login_check(request):
             # Return a 'disabled account' error message
             return HttpResponseRedirect('userdisenable')
     else:
-        # Return an 'invalid login' error message.
         # 创建用户和用户资料数据
         user = User.objects.create_user(username,'',password)
-        user.first_name = sinauser.name;
-        user.last_name = sinauser.screen_name;
+        user.first_name = sinauser.id
+        user.last_name = sinauser.screen_name
         user.save()
         userprofile = user.get_profile()
-        userprofile.username = sinauser.name;
+        userprofile.username = sinauser.name
         userprofile.save()
         user = authenticate(username=username,password=password)
  
