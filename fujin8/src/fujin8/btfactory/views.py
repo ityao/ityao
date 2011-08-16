@@ -10,6 +10,9 @@ import re
 import urlparse
 from django.db.utils import IntegrityError
 from urllib2 import URLError
+from django.shortcuts import get_object_or_404
+import string
+import hashlib
 
 logger = logging.getLogger(__name__)
 
@@ -37,9 +40,10 @@ def parseMonth(month_url):
     
     count = 0
     parsed_count = 0
+    reobj = re.compile(u"^★㊣最新の[(日本)(亚洲)](.)*♂(.)*♀$")
+        
     for link in links:            
-        content = link.getText()        
-        reobj = re.compile(u"^★(.)*♂(.)*♀$")
+        content = link.getText()                
         match = reobj.search(content)
         if match:
             count = count+1
@@ -53,8 +57,8 @@ def parseMonth(month_url):
             except IntegrityError:
                 logger.info("URL already existed:...." + linkstr)
                 pass    
-            if count > 4:
-                #only parse 5 links every time
+            if count > 14:
+                #only parse 15 links every time
                 break 
         else:
             logger.info(content+" not match!")
@@ -67,15 +71,64 @@ def daily(request):
     for link in links:
         count = count + parseMonth(link)
     
-    parsed_daily_list = DailyLink.objects.filter(parsed=False)[:100]
+    parsed_daily_list = DailyLink.objects.filter(parsed=False).order_by('-id')[:100]
     t = loader.get_template('btfactory/daily.html')
     c = Context({'parsed_daily_list': parsed_daily_list,'parsed_count':count,})
     return HttpResponse(t.render(c))
 
-def dailymovie(request):
-    parsed_movie_list = MovieLink.objects.filter(parsed=False)[:100]
-    t = loader.get_template('btfactory/index.html')
-    c = Context({'parsed_movie_list': parsed_movie_list,})
+
+def dailymovie(request, daily_id):    
+    
+    dl = get_object_or_404( DailyLink, pk=daily_id)
+    try:
+        page = urllib2.urlopen(dl.link)
+        content = page.read()         
+        content = content.decode('gb18030').encode('utf8')
+        page.close() 
+    except URLError:        
+        raise
+    
+    index = content.find("<div id=\"content\">")+18
+    index2 = content.find("</div>",index)
+    content = content[index:index2]    
+    movies = content.split("<br />\r\n<br />\r\n")
+    mi = 1    
+    movielinks = []    
+    p = re.compile('<IMG class="postimg" src=".*" />',re.IGNORECASE);
+    for movie in movies:
+        logger.info("movie "+str(mi)+" :\n" + movie)
+        logger.info("movie "+str(mi)+"***************************************************************")
+        mi = mi + 1          
+        movie = movie.strip()
+        if len(movie) < 20:
+            continue
+        #create the movielink object
+        digestkey = hashlib.sha224(movie).hexdigest()
+        tIndex = movie.find("<br />")
+        mTitle = movie[0:tIndex] 
+        #find all images        
+        
+        images = []
+        for match in p.finditer(movie):
+            image = str(match.group())
+            iIndex = image.find('src="')+5
+            iIndex2 = image.find('"',iIndex)            
+            image = image[iIndex:iIndex2]
+            #logger.info("movie: "+mTitle+" image:"+image)
+            images.append(image)
+            
+        imagesLink = ";".join(images)
+        ml = MovieLink(title=mTitle,raw_desc=movie,digestkey=digestkey,daily_link=dl,images=imagesLink)
+        try:
+            ml.save()
+            movielinks.append(ml)
+        except IntegrityError:
+            logger.info("movie already existed:...." + mTitle)
+            pass    
+        
+    movielinks = MovieLink.objects.filter(parsed=False,daily_link=dl).order_by('-id')[:100]    
+    t = loader.get_template('btfactory/dailymovies.html')
+    c = Context({'dl':dl,'movielinks':movielinks})
     return HttpResponse(t.render(c))
 
 def actress(request):

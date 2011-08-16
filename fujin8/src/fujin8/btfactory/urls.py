@@ -9,6 +9,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^$', 'fujin8.btfactory.views.index'),
     (r'^daily/$', 'fujin8.btfactory.views.daily'),
+    (r'^(?P<daily_id>\d+)/daily/$', 'fujin8.btfactory.views.dailymovie'),    
     (r'^actress/$', 'fujin8.btfactory.views.actress'),
     (r'^actress/(?P<actress_id>\d+)/$', 'fujin8.btfactory.views.actressinfo'),    
 )

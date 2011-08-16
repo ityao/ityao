@@ -7,7 +7,7 @@
 {% if parsed_daily_list %}
     <ul>
     {% for dailylink in parsed_daily_list %}
-        <li><a href="{{ dailylink.link }}">{{ dailylink.label }}</a></li>
+        <li><a href="{{ dailylink.link }}">{{ dailylink.label }}</a>&nbsp;&nbsp;&nbsp;<a href="/btfactory/{{dailylink.id}}/daily">抓取</a></li>
     {% endfor %}
     </ul>
 {% else %}

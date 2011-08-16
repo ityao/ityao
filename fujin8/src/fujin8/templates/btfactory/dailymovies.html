@@ -1,0 +1,34 @@
+{% if dl %}
+	<p>标题{{dl.id}}--<a href="{{dl.link}}">{{dl.label}}</a></p>
+{% else %}
+    <p>没主题</p>
+{% endif %}
+
+{% if movielinks %}    
+    {% for movielink in movielinks %}
+    <ul>
+    	<li>
+    	{% if not movielink.parsed %}
+			<p style="color:red">
+		{% else %}
+    		<p>
+		{% endif %}
+        {{movielink.title}}
+        	</p>
+        </li>
+        <li>演员名称：</li>
+        <li>剧照：
+        	<nobr>
+        	{% for image in movielink.getImages %}
+    			<img src="{{image}}" width="200" />
+			{% endfor %}
+			</nobr>	
+        </li>
+        <!--
+        <li><div>{{movielink.raw_desc|safe}}</div></li>
+        -->
+    </ul>    
+    {% endfor %}
+{% else %}
+    <p>No movie links are available.</p>
+{% endif %}
