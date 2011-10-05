@@ -1,3 +1,4 @@
+#coding=utf-8 
 # Django settings for fujin8 project.
 import os.path
 
@@ -7,7 +8,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Silver Lao', 'silver.lao@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -23,34 +24,11 @@ DATABASES = {
     }
 }
 
-'''
-#local database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'fujin8',                      # Or path to database file if using sqlite3.
-        'USER': 'fujin8',                      # Not used with sqlite3.
-        'PASSWORD': 'fujin8pwd',                  # Not used with sqlite3.
-        'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
-'''
-
-
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# On Unix systems, a value of None will cause Django to use the same
-# timezone as the operating system.
-# If running in a Windows environment this must be set to the same as your
-# system time zone.
-#TIME_ZONE = 'America/Chicago'
 TIME_ZONE = 'Asia/Shanghai'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh_CN'
 
 SITE_ID = 1
 
@@ -115,7 +93,8 @@ TEMPLATE_LOADERS = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
+    "django.core.context_processors.debug",   
+    "django.core.context_processors.request",
 )
 
 MIDDLEWARE_CLASSES = (
@@ -149,9 +128,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'fujin8',
-    'fujin8.polls',
-    'fujin8.account',
     'fujin8.btfactory',
+    'fujin8.registration',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -218,7 +196,7 @@ LOGGING = {
         'django.request': {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
-            'propagate': False,
+            'propagate': True,
         },
         'fujin8.btfactory.views': {
             'handlers': ['console', 'mail_admins'],
@@ -227,6 +205,31 @@ LOGGING = {
     }
 }
 
-AUTH_PROFILE_MODULE = 'account.UserProfile'
+#AUTH_PROFILE_MODULE = 'account.UserProfile'
+
+ACCOUNT_ACTIVATION_DAYS = 3
+LOGIN_REDIRECT_URL = '/'
+DEFAULT_FROM_EMAIL = 'noreply@beauty.fujin8.com'
+
+'''
+EMAIL_HOST = "smtp.gmail.com" 
+EMAIL_HOST_PASSWORD = "actorwall" 
+EMAIL_HOST_USER = "aiqingdongzuopian@gmail.com" 
+EMAIL_USE_TLS = True
+
+EMAIL_HOST = "host320.hostmonster.com" 
+EMAIL_PORT = "26"
+EMAIL_HOST_PASSWORD = "noreplyaaa" 
+EMAIL_HOST_USER = "noreply@beauty.fujin8.com" 
+EMAIL_USE_TLS = False
+'''
+
+
+
+
+
+
+
+
 
 

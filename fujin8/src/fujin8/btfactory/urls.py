@@ -6,11 +6,17 @@ from django.conf.urls.static import static
 from django.contrib import admin
 admin.autodiscover()
 
+'''(r'^daily/$', 'fujin8.btfactory.views.daily', 'daily_film_auth'),'''
 urlpatterns = patterns('',
     (r'^$', 'fujin8.btfactory.views.index'),
-    (r'^daily/$', 'fujin8.btfactory.views.daily'),
-    (r'^(?P<daily_id>\d+)/daily/$', 'fujin8.btfactory.views.dailymovie'),    
+    (r'^moviethumbcron/$', 'fujin8.btfactory.views.moviethumbcron'),
+    (r'^dailycron/$', 'fujin8.btfactory.views.dailycron'),
+    (r'^actresscron/$', 'fujin8.btfactory.views.actresscron'),
+    (r'^(?P<daily_id>\d+)/daily/$', 'fujin8.btfactory.views.dailymovie'),
+    (r'^movie/(?P<movie_id>\d+)/confirm/$', 'fujin8.btfactory.views.confirmMovie'),    
     (r'^actress/$', 'fujin8.btfactory.views.actress'),
-    (r'^actress/(?P<actress_id>\d+)/$', 'fujin8.btfactory.views.actressinfo'),    
+    (r'^actress/(?P<actress_id>\d+)/$', 'fujin8.btfactory.views.actressinfo'),
+    url(r'^daily/$', 'fujin8.btfactory.views.daily', name='daily_film_auth'),
+    url(r'^new/$', 'fujin8.btfactory.views.newfilm', name='new_film'),
 )
 

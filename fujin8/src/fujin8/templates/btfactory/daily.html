@@ -1,15 +1,21 @@
-{% if parsed_count %}
-	<p>parsed {{parsed_count}} daily entry.</p>
-{% else %}
-    <p>Not parse any daily entry.</p>
-{% endif %}
+{% extends "base.html" %}
+{% block title %}每日片子审核{% endblock %}
+{% block content %}
 
-{% if parsed_daily_list %}
-    <ul>
-    {% for dailylink in parsed_daily_list %}
-        <li><a href="{{ dailylink.link }}">{{ dailylink.label }}</a>&nbsp;&nbsp;&nbsp;<a href="/btfactory/{{dailylink.id}}/daily">抓取</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No daily links are available.</p>
-{% endif %}
+	{% if parsed_daily_list %}
+	    <ul>
+	    {% for dailyinfo in parsed_daily_list %}
+	        <li>
+	        	<a class="u gC" href="{{ dailyinfo.daily.link }}">{{ dailyinfo.daily.label }}</a>
+	        	&nbsp;&nbsp;&nbsp;
+	        	<a href="/btfactory/{{dailyinfo.daily.id}}/daily" class="u">
+	        		({{dailyinfo.confirmed}}/{{dailyinfo.loaded}}/{{dailyinfo.count}})
+	        	</a>
+	        </li>
+	    {% endfor %}
+	    </ul>
+	{% else %}
+	    <p>No daily links are available.</p>
+	{% endif %}
+
+{% endblock %}

@@ -1,73 +1,80 @@
 <!DOCTYPE html>
+{% load tags %}
 <html lang="zh_cn">
 	<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
-		<title>附近吧－{% block title %}发掘你身边有趣的事情！{% endblock %}</title><meta name="description" content="附近吧，找出你身边的乐子." ></meta><meta name="keywords" content="微薄, 图片, 视频, 美女" ></meta><meta name="copyright" content="Copyright © 2011 IT妖技术团队"></meta>
+		<title>宅男吧 －{% block title %}发掘你身边有趣的事情！{% endblock %}</title>
+		<meta name="description" content="附近吧，找出你身边的乐子." ></meta>
+		<meta name="keywords" content="微薄, 图片, 视频, 美女" ></meta>
+		<meta name="copyright" content="Copyright © 2011 宅男战团"></meta>
+		<link rel="stylesheet" type="text/css" href="/media/css/base.css" />
 		<link rel="stylesheet" type="text/css" href="/media/css/site.css" />
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js">
-		</script>
+		<link rel="shortcut icon" href="/media/css/favicon.ico" />
 		{% block head_javascript_page %}{% endblock %}
 		{% block head_css_page %}{% endblock %}
 		<script type="text/javascript">
+		
+ var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25815783-1']);
+  _gaq.push(['_trackPageview']);
 
-	var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'UA-23472963-1']);
-	_gaq.push(['_setDomainName', '.fujin8.com']);
-	_gaq.push(['_trackPageview']);
-
-	(function() {
-		var ga = document.createElement('script');
-		ga.type = 'text/javascript';
-		ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0];
-		s.parentNode.insertBefore(ga, s);
-	})();
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
 
 		</script>
 	</head>
 	<body>
-		<div id="top">
-			<nav id="mainnav">
-				<ul>
-					<li>
-						<a href="index.html" id="nav_home" accesskey="h">附近吧</a>
-					</li>
-					<li>
-						<a href="weibo.html" id="nav_services">微博</a>
-					</li>
-					<li>
-						<a href="photo.html" id="nav_services">图片</a>
-					</li>	
-					<li>
-						<a href="service.html" id="nav_service">互助</a>
-					</li>
-					<li>
-						<a href="friends.html" id="nav_friends">找朋友</a>
-					</li>	
-				</ul>
-			</nav>
-			<nav id="usernav">
-				<ul>
-					<li>
-						<a href="setting.html" id="nav_setting" accesskey="h">设置</a>
-					</li>
-					{% if user.is_authenticated %}
-					<li>
-						<a href="/logout">用户名:{{user.first_name}}</a>
-					</li>
-					{% else %}
-					<li>
-						<a href="/login">新浪微博登陆</a>
-					</li>
-					{% endif %}					
-				</ul>	
-			</nav>
-		</div>
-		{% block body_content %} {% endblock %}
+		<header id="top">
+			<div>
+				<nav id="mainnav">
+					<ul>
+						<li>
+							<a href="/" id="nav_home" class="{% active request "^/$" %}" >首页</a>
+						</li>						
+						<li>
+							<a href="{% url new_film%}" id="nav_home" class="{% active request "^/btfactory/new/$" %}" accesskey="h">新片</a>
+						</li>
+						{% if user.is_authenticated %}
+						<li>
+							<a href="index.html" id="nav_home" accesskey="h">{{ user.username }}的订阅</a>
+						</li>
+						{% endif %}
+					</ul>
+				</nav>
+				<nav id="usernav">
+					<ul>						
+						<li>
+						{% if user.is_authenticated %}				
+							{% if user.is_staff %}
+								<a href="{% url daily_film_auth %}" class="{% active request "^/btfactory/daily/$" %}" >每日管理</a>
+							{% endif %}
+							{% if user.is_superuser %}
+								<a href="/admin">后台管理</a>
+							{% endif %}			
+							<a class="{% active request "^/accounts/password/change/$" %}" href="/accounts/password/change/">修改密码</a>
+							<a href="/accounts/logout?next=/">退出</a>
+						{% else %}						
+							<a class="{% active request "^/accounts/login/$" %}" href="/accounts/login">登陆</a>						
+							<a class="{% active request "^/accounts/register/$" %}" href="/accounts/register">注册</a>
+						{% endif %}
+						</li>					
+					</ul>	
+				</nav>
+			</div>
+		</header>
+		<article id="main_content">
+		{% block content %} {% endblock %}
+		</article>
+		<footer>
+			宅男吧  &copy;2011			
+		</footer>
 		{% block sidebar %}{% endblock %}
-		<div id="bottom">
-			<footer><p>footer</p></footer>		
-		</div>
-		{% block footer_javascript_page %}{% endblock %}
-	</body>
+		<!--
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+		-->		
+		{% block footer_javascript_page %}{% endblock %}		
+		
+	</body>	
 </html>

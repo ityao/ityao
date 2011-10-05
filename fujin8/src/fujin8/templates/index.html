@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}发掘附近有趣的事情{% endblock title %}
+{% block title %}宅是一种文化{% endblock title %}
 {% block body_header_title %}{% endblock body_header_title %}
 {% block head_css_page %}
 {% endblock head_css_page %}
@@ -8,301 +8,36 @@
 </script>
 {% endblock head_javascript_page %}
 {% block footer_javascript_page %}
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&language=zh">
-</script>
-<script type="text/javascript">
-	var initialLocation;
-	var beijing = new google.maps.LatLng(60, 105);
-	var browserSupportFlag =  new Boolean();
-
-	$(document).ready( function() {
-		var latlng = new google.maps.LatLng(-34.397, 150.644);
-		var myOptions = {
-			zoom: 8,
-			center: latlng,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
-		var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-		// Try W3C Geolocation (Preferred)
-		if(navigator.geolocation) {
-			browserSupportFlag = true;
-			navigator.geolocation.getCurrentPosition( function(position) {
-				initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-				map.setCenter(initialLocation);
-			}, function() {
-				handleNoGeolocation(browserSupportFlag);
-			});
-			// Try Google Gears Geolocation
-		} else if (google.gears) {
-			browserSupportFlag = true;
-			var geo = google.gears.factory.create('beta.geolocation');
-			geo.getCurrentPosition( function(position) {
-				initialLocation = new google.maps.LatLng(position.latitude,position.longitude);
-				map.setCenter(initialLocation);
-			}, function() {
-				handleNoGeoLocation(browserSupportFlag);
-			});
-			// Browser doesn't support Geolocation
-		} else {
-			browserSupportFlag = false;
-			handleNoGeolocation(browserSupportFlag);
-		}
-
-		function handleNoGeolocation(errorFlag) {
-			if (errorFlag == true) {
-				alert("Geolocation service failed.");
-				initialLocation = newyork;
-			} else {
-				alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
-				initialLocation = siberia;
-			}
-			map.setCenter(initialLocation);
-		}
-
-	});
-</script>
 {% endblock footer_javascript_page %}
 {% block body_class %}home{% endblock body_class %}
-{% block body_content %}
+{% block content %}
 
-<section id="contentwrapper">	
-	<article>
-		<p>
-			begin--aaa!!
-		</p>
-	</article>
-	<article>
-		<p>
-			bbbb!!
-		</p>
-	</article>
-	<article>
-		<p>
-			bbbb!!
-		</p>
-	</article>
-	<article>
-		<p>
-			bbbb!!
-		</p>
-	</article>
-	<article>
-		<p>
-			bbbb!!
-		</p>
-	</article>
-	<article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			aaa!!
-		</p>
-	</article>
-	<article>
-		<p>
-			bbbb!!
-		</p>
-	</article>
-	<article>
-		<p>
-			bbbb!!
-		</p>
-	</article>
-	<article>
-		<p>
-			bbbb!!
-		</p>
-	</article>
-	<article>
-		<p>
-			bbbb!!
-		</p>
-	</article>
-	<article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			aaa!!
-		</p>
-	</article>
-	<article>
-		<p>
-			bbbb!!
-		</p>
-	</article>
-	<article>
-		<p>
-			bbbb!!
-		</p>
-	</article>
-	<article>
-		<p>
-			bbbb!!
-		</p>
-	</article>
-	<article>
-		<p>
-			bbbb!!
-		</p>
-	</article>
-	<article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			cccc!!
-		</p>
-	</article><article>
-		<p>
-			aaa!!
-		</p>
-	</article>
-	
+<section id="searchform">
+	<h1>寻找你喜欢的女演员，关注她之后有新片将立即发种子到你邮箱方便你下载！</h1>
+	<div >		
+		<form method="post" action="">			
+				<label>演员名:</label>
+				{{ form.actress }}
+				<input type="submit" value="检 索"  />			
+		</form>
+	</div>
+</section >	
+
+<section >	
+{% if atresses %}    
+    {% for actress in atresses %}	
+	<div class="star-box">
+		<img alt="{{actress.name}}" title="{{actress.name}}" src="{{actress.photo}}">
+		<div class="star-info">
+			<a class="u"  href="/btfactory/subscribe/{{actress.id}}">关注</a>					
+			<span class="actress_name">{{actress.name}}</span>
+			<br/>
+			<span class="coname">{{actress.co_names}}</span>
+		</div>
+	</div>
+	{% endfor %}
+{% else %}
+    <h1>很抱歉，找不到你要的演员，请试试用繁体中文，或者缩小搜索字符范围！</h1>
+{% endif %}
 </section>
-{% endblock body_content %}
+{% endblock content %}

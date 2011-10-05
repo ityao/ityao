@@ -7,6 +7,7 @@
 {% if movielinks %}    
     {% for movielink in movielinks %}
     <ul>
+    	<form action="/btfactory/movie/{{ movielink.id }}/confirm/" method="post">
     	<li>
     	{% if not movielink.parsed %}
 			<p style="color:red">
@@ -16,17 +17,25 @@
         {{movielink.title}}
         	</p>
         </li>
-        <li>演员名称：</li>
-        <li>剧照：
+        {% if not movielink.parsed %}
+			<li>演员名称：<input type="" name="actress" value="{{movielink.actress_names}}" maxlength="50" /> <input type="submit" value="确认" /> (多个名字用分号;隔开)</li>
+		{% else %}
+    		<li>演员名称：{{movielink.actress_names}}</li>
+		{% endif %}        
+        <li>剧照：        	
         	<nobr>
         	{% for image in movielink.getImages %}
-    			<img src="{{image}}" width="200" />
+    			<img src="{{image}}" style="max-height: 400"/>
 			{% endfor %}
-			</nobr>	
+			</nobr>				
         </li>
-        <!--
-        <li><div>{{movielink.raw_desc|safe}}</div></li>
-        -->
+        <li>下载链接：        	
+        	{% for link in movielink.getLinks %}
+        		<A href="{{link}}" target=_blank >{{link}}</A>    			
+			{% endfor %}				
+        </li>        
+        <li>**************************</li>        
+        </form>
     </ul>    
     {% endfor %}
 {% else %}
