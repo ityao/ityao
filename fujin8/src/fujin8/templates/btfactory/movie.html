@@ -1,0 +1,17 @@
+{% if movielinks %}
+    <ul>
+    	{% for movielink in movielinks %}
+	    	<li>
+	    	{% if not movielink.parsed %}
+				<p style="color:red">
+			{% else %}
+	    		<p>
+			{% endif %}
+	        {{movielink.title}}
+	        	</p>
+	        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No movie need to create thumb.</p>
+{% endif %}

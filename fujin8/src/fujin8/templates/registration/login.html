@@ -1,0 +1,46 @@
+{% extends "registration/registration_base.html" %}
+{% block title %}登入{% endblock %}
+{% block content %}
+
+<div id="inputform">
+	<div style="float: left">
+	<h1>登入</h1>
+	{% if form.errors %}
+	<div  class="login-tip">				
+		<h4 class="error-title">登录名或密码错误!</h4>
+	</div>
+	{% endif %}
+	<form method="post" action="{% url django.contrib.auth.views.login %}">{% csrf_token %}
+	<ul>
+		<li>
+			<label>用户名:</label>
+			<p>
+				{{ form.username }}
+			</p>
+			
+		</li>
+		<li>
+			<label>密&nbsp;&nbsp;码:</label>
+			<p>
+				{{ form.password }}
+			</p>
+		</li>
+		<li>
+			<p>
+				<span style="float: right">
+					<a hidefocus="true" title="找回密码" style="color:#999999;display:inline-block;font-size:12px;text-decoration:underline;" href="{% url auth_password_reset %}">忘记密码？</a>
+				</span>
+			</p>
+		</li>
+		<li>
+			<p>
+				<input type="submit" value="登陆" class="btn" />				
+			</p>
+		</li>		
+	</ul>
+	<input type="hidden" name="next" value="{{ next }}" />
+	</form>
+	</div>
+	<img src="/media/css/login.jpg" style="float:right;display:block;">
+</div>
+{% endblock %}

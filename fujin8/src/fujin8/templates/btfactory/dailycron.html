@@ -1,0 +1,16 @@
+{% if daily_list %}
+    <ul>
+    {% for dailyinfo in daily_list %}
+        <li>
+        	<a href="{{ dailyinfo.daily.link }}">{{ dailyinfo.daily.label }}</a>
+        	&nbsp;&nbsp;&nbsp;
+        	<a href="/btfactory/{{dailyinfo.daily.id}}/daily">
+        		({{dailyinfo.confirmed}}/{{dailyinfo.count}})
+        	</a>
+        	parsed!
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No daily links are need to parse.</p>
+{% endif %}

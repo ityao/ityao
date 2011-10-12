@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}最新影片{% endblock %}
+{% block content %}
+
+	{% if film_list %}
+	    <section>
+	    {% for film in film_list.object_list %}
+	        <div>
+	        	{% for image in film.getImages %}
+    			<img src="{{image}}"/>
+				{% endfor %}
+	        	<p>{{ film.title }}</p>
+	        	<p>下载:
+	        	{% for link in film.getLinks %}
+        		<a href="{{link}}" target=_blank >{{link}}</a>    			
+				{% endfor %}
+				</p>
+	        </div>
+	    {% endfor %}
+	    <div class="pagination">
+		    <span class="step-links">
+		        {% if film_list.has_previous %}
+		            <a href="?page={{ film_list.previous_page_number }}">前一页</a>
+		        {% endif %}
+		
+		        <span class="current">
+		            	第 {{ film_list.number }} 页 / 共 {{ film_list.paginator.num_pages }} 页.
+		        </span>
+		
+		        {% if film_list.has_next %}
+		            <a href="?page={{ film_list.next_page_number }}">下一页</a>
+		        {% endif %}
+		    </span>
+		</div>
+	    </section>
+	{% else %}
+	    <p>No films are available.</p>
+	{% endif %}
+
+{% endblock %}

@@ -1,0 +1,8 @@
+你好！你刚刚注册了{{ site.name }}.  如果不是你自己注册的，请忽略此邮件.
+
+请在 {{ expiration_days }} 天内点击下方链接激活帐号:
+
+http://{{site.domain}}/accounts/activate/{{ activation_key }}
+
+此致, 祝身体健康！
+{{ site.name }} 管理团队
