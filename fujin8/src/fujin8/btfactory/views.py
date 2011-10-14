@@ -2,7 +2,7 @@
 from btfactory.models import MovieLink, DailyLink, MonthlyLink, Actress
 from django.template import loader
 from django.template.context import Context, RequestContext
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 import urllib2
 import logging
 from BeautifulSoup import BeautifulSoup,Tag
@@ -13,7 +13,7 @@ from urllib2 import URLError
 from django.shortcuts import get_object_or_404, render_to_response
 import string
 import hashlib
-from django import http
+
 import datetime
 import time
 import cStringIO
@@ -54,12 +54,14 @@ def create_resized_image(image_name, original_location, xconstrain=640):
 
     # Ensure a resized image doesn't already exist in the default MEDIA_ROOT/images/resized (MEDIA_ROOT is defined in Django's settings)
     month = str(datetime.date.today())[0:7]
-    dir = '%simages/%s' % (settings.MEDIA_ROOT,month)
+    
+    # 'dir' is a buildin function, so renam as 'monthly_dir'
+    monthly_dir = '%simages/%s' % (settings.MEDIA_ROOT,month)
     try:
-        os.makedirs(dir)
+        os.makedirs(monthly_dir)
     except OSError:
         pass    
-    filename = '%s/%s.jpg' % (dir, image_name)
+    filename = '%s/%s.jpg' % (monthly_dir, image_name)
     if not os.path.exists(filename): 
         # Fetch original image
         urllink = smart_str(original_location)
@@ -89,11 +91,8 @@ def create_resized_image(image_name, original_location, xconstrain=640):
 def index(request):
     
     latest_movies_list = MovieLink.objects.all().order_by('-pub_date')[:5]
-    t = loader.get_template('btfactory/index.html')
-    c = Context({
-        'latest_movies_list': latest_movies_list,
-    })
-    return HttpResponse(t.render(c))
+
+    return render_to_response('btfactory/index.html', locals())
 
 #从每日的新剧作页面读取剧作
 def parseDailyMovie(dl):
@@ -196,9 +195,9 @@ def parseMonth(month_url):
 
 def moviethumbcron(request):
     #get 1 link of not saved
-    mls = MovieLink.objects.filter(images_loaded=False)[:5]
+    movielinks = MovieLink.objects.filter(images_loaded=False)[:5]
     #save image to local
-    for ml in mls:
+    for ml in movielinks:
         images = ml.images.split(";")
         count = 0   
         imageLinks = [] 
@@ -214,9 +213,7 @@ def moviethumbcron(request):
         ml.images_loaded = True
         ml.save()
     
-    c = Context({'movielinks':mls})    
-    t = loader.get_template('btfactory/movie.html')
-    return HttpResponse(t.render(c)) 
+    return render_to_response('btfactory/movie.html', locals())
 
 def dailycron(request):
     # get daily link from the month link
@@ -279,15 +276,13 @@ def parseActress(url):
 def actresscron(request):    
     urlprefix = "http://avno1.com/?action-model-name-avgirls-itemid-"
     count = 0
-    for n in range(479,480):
+    for n in range(400,480):
         url = urlprefix + str(n)
         if parseActress(url):
             count = count + 1
         time.sleep(1)   
     
-    c = Context({'count':count})    
-    t = loader.get_template('btfactory/actresscount.html')
-    return HttpResponse(t.render(c)) 
+    return render_to_response('btfactory/actresscount.html', locals())
 
 def newfilm(request):
     movielist = MovieLink.objects.order_by('-id')
@@ -337,24 +332,18 @@ def confirmMovie(request, movie_id):
 def dailymovie(request, daily_id):        
     dl = get_object_or_404( DailyLink, pk=daily_id)
     movielinks = MovieLink.objects.filter(daily_link=dl).order_by('-id')[:100]    
-    t = loader.get_template('btfactory/dailymovies.html')
-    c = Context({'dl':dl,'movielinks':movielinks})
-    return HttpResponse(t.render(c))
+
+    return render_to_response('btfactory/dailymovies.html', locals())
 
 def actress(request):
 
     latest_movies_list = MovieLink.objects.all().order_by('-pub_date')[:5]
-    t = loader.get_template('btfactory/index.html')
-    c = Context({
-        'latest_movies_list': latest_movies_list,
-    })
-    return HttpResponse(t.render(c))
 
-def actressinfo(request):
+    return render_to_response('btfactory/index.html', locals())
 
-    latest_movies_list = MovieLink.objects.all().order_by('-pub_date')[:5]
-    t = loader.get_template('btfactory/index.html')
-    c = Context({
-        'latest_movies_list': latest_movies_list,
-    })
-    return HttpResponse(t.render(c))
+def actressinfo(request, actress_id):
+
+    #latest_movies_list = MovieLink.objects.all().order_by('-pub_date')[:5]
+    actress = get_object_or_404(Actress, pk=actress_id)
+
+    return render_to_response('btfactory/index.html', locals())

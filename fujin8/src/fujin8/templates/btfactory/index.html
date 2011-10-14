@@ -1,9 +1,25 @@
+{% extends "base.html" %}
+{% block content %} 
+<div>
 {% if parsed_daily_list %}
+    <div id="parsed_daily_list">
     <ul>
     {% for dailylink in parsed_daily_list %}
         <li><a href="/polls/{{ dailylink.id }}/">{{ dailylink.link }}</a></li>
     {% endfor %}
     </ul>
-{% else %}
-    <p>No daily links are available.</p>
+    </div>
 {% endif %}
+
+{% if actress %}
+    <div id="actress">
+    <ul>
+        name: {{ actress.name }}<br />
+        co_names: {{ actress.co_names }}<br />
+        photo: <img alt="{{actress.name}}" title="{{actress.name}}" src="{{actress.photo}}"><br />
+        profile: {{ actress.profile }}<br />
+    </ul>
+    </div>
+{% endif %}
+</div>
+{% endblock %}
