@@ -7,7 +7,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 '''(r'^daily/$', 'btfactory.views.daily', 'daily_film_auth'),'''
-urlpatterns = patterns('btfactory.views',
+urlpatterns = patterns('fujin8.btfactory.views',
     (r'^$', 'index'),
     (r'^moviethumbcron/$', 'moviethumbcron'),
     (r'^dailycron/$', 'dailycron'),

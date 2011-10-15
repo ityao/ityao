@@ -1,5 +1,5 @@
 #coding=utf-8 
-from btfactory.models import MovieLink, DailyLink, MonthlyLink, Actress
+from fujin8.btfactory.models import MovieLink, DailyLink, MonthlyLink, Actress
 from django.template import loader
 from django.template.context import Context, RequestContext
 from django.http import HttpResponseRedirect

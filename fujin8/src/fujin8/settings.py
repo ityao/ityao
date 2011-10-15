@@ -5,7 +5,7 @@ import os.path
 DIRNAME = os.path.abspath(os.path.dirname(__file__))
 DEBUG = True
 #DEBUG = False
-TEMPLATE_DEBUG = DEBUG
+#TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ('Silver Lao', 'silver.lao@gmail.com'),
@@ -106,7 +106,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'fujin8.urls'
 
 
 
@@ -127,8 +127,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'btfactory',
-    'registration',
+    'fujin8',
+    'fujin8.btfactory',
+    'fujin8.registration',
 )
 
 # A sample logging configuration. The only tangible logging
