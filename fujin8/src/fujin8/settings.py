@@ -106,7 +106,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'fujin8.urls'
+ROOT_URLCONF = 'urls'
 
 
 
@@ -127,9 +127,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'fujin8',
-    'fujin8.btfactory',
-    'fujin8.registration',
+    'btfactory',
+    'registration',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -198,7 +197,7 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        'fujin8.btfactory.views': {
+        'btfactory.views': {
             'handlers': ['console', 'mail_admins'],
             'level': 'INFO',            
         }

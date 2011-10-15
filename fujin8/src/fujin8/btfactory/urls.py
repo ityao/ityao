@@ -6,8 +6,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 admin.autodiscover()
 
-'''(r'^daily/$', 'fujin8.btfactory.views.daily', 'daily_film_auth'),'''
-urlpatterns = patterns('fujin8.btfactory.views',
+'''(r'^daily/$', 'btfactory.views.daily', 'daily_film_auth'),'''
+urlpatterns = patterns('btfactory.views',
     (r'^$', 'index'),
     (r'^moviethumbcron/$', 'moviethumbcron'),
     (r'^dailycron/$', 'dailycron'),

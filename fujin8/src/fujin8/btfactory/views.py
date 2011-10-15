@@ -337,7 +337,7 @@ def dailymovie(request, daily_id):
 
 def actress(request):
 
-    latest_movies_list = MovieLink.objects.all().order_by('-pub_date')[:5]
+    actress_list = Actress.objects.all().order_by('-update_date')[:5]
 
     return render_to_response('btfactory/index.html', locals())
 
