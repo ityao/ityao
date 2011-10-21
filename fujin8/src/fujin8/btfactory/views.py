@@ -48,6 +48,9 @@ def save_acttress_header(actress_id, original_location):
 #640 is iphones
 def create_resized_image(image_name, original_location, xconstrain=640):
     
+    if not original_location:
+        return None
+    
     from PIL import Image, ImageOps
     import os
     from django.conf import settings
@@ -55,7 +58,7 @@ def create_resized_image(image_name, original_location, xconstrain=640):
     # Ensure a resized image doesn't already exist in the default MEDIA_ROOT/images/resized (MEDIA_ROOT is defined in Django's settings)
     month = str(datetime.date.today())[0:7]
     
-    # 'dir' is a buildin function, so renam as 'monthly_dir'
+    # 'dir' is a buildin function, so rename as 'monthly_dir'
     monthly_dir = '%simages/%s' % (settings.MEDIA_ROOT,month)
     try:
         os.makedirs(monthly_dir)
@@ -198,7 +201,9 @@ def moviethumbcron(request):
     movielinks = MovieLink.objects.filter(images_loaded=False)[:5]
     #save image to local
     for ml in movielinks:
+        logger.info("[movie thumb cron]movieid: %s" % (ml.id, ))
         images = ml.images.split(";")
+        logger.info("[movie thumb cron]%s" % (images, ))
         count = 0   
         imageLinks = [] 
         for image in images:
@@ -206,7 +211,8 @@ def moviethumbcron(request):
             imgname = str(ml.digestkey)+"_"+str(count)
             try: 
                 link = create_resized_image(imgname, image)
-                imageLinks.append(link) 
+                if link:
+                    imageLinks.append(link) 
             except IOError:        
                 continue
         ml.images = ";".join(imageLinks)
@@ -220,11 +226,12 @@ def dailycron(request):
     link = MonthlyLink.objects.get(enable=True)
     parseMonth(link)    
     # get movies from daily link page
-    daily_lists = DailyLink.objects.filter(parsed=False).order_by('-id')[:100]
+    #daily_lists = DailyLink.objects.filter(parsed=False).order_by('-id')[:100]
+    daily_lists = DailyLink.objects.filter(parsed=False).order_by('-id')
     for dl in daily_lists:
         parseDailyMovie(dl)
     
-    return render_to_response('btfactory/dailycron.html', {'daily_lists': daily_lists})
+    return render_to_response('btfactory/dailycron.html', locals())
 
 def parseActress(url):
     try:

@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% block title %}演员解析结果{% endblock %}
+{% block content %}
 {% if dl %}
 	<p>标题{{dl.id}}--<a href="{{dl.link}}">{{dl.label}}</a></p>
 {% else %}
@@ -41,3 +44,4 @@
 {% else %}
     <p>No movie links are available.</p>
 {% endif %}
+{% endblock %}

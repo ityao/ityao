@@ -1,6 +1,9 @@
-{% if daily_list %}
+{% extends "base.html" %}
+{% block title %}解析结果{% endblock %}
+{% block content %}
+{% if daily_lists %}
     <ul>
-    {% for dailyinfo in daily_list %}
+    {% for dailyinfo in daily_lists %}
         <li>
         	<a href="{{ dailyinfo.daily.link }}">{{ dailyinfo.daily.label }}</a>
         	&nbsp;&nbsp;&nbsp;
@@ -13,4 +16,5 @@
     </ul>
 {% else %}
     <p>No daily links are need to parse.</p>
-{% endif %}
+
+{% endblock %}
