@@ -185,11 +185,18 @@ LOGGING = {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
             #'filters': ['special']
+        },
+        'file':{
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'simple',
+            'filename': os.path.join(DIRNAME, 'fujin8.log'),
+            'mode': 'a',
         }
     },
     'loggers': {
         'django': {
-            'handlers':['null'],
+            'handlers':['file', 'console'],
             'propagate': True,
             'level':'INFO',
         },
@@ -199,7 +206,7 @@ LOGGING = {
             'propagate': True,
         },
         'btfactory.views': {
-            'handlers': ['console', 'mail_admins'],
+            'handlers': ['console', 'file'],
             'level': 'INFO',            
         }
     }

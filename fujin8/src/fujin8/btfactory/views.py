@@ -4,7 +4,8 @@ from django.template import loader
 from django.template.context import Context, RequestContext
 from django.http import HttpResponseRedirect
 import urllib2
-import logging
+#import logging
+from django.utils.log import logger
 from BeautifulSoup import BeautifulSoup,Tag
 import re
 import urlparse
@@ -20,7 +21,7 @@ import cStringIO
 from django.utils.encoding import smart_str, smart_unicode
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-logger = logging.getLogger(__name__)
+#logger = logging.getLogger(__name__)
 
 def save_acttress_header(actress_id, original_location):
     
@@ -210,14 +211,16 @@ def moviethumbcron(request):
             count = count + 1
             imgname = str(ml.digestkey)+"_"+str(count)
             try: 
-                link = create_resized_image(imgname, image)
+                #link = create_resized_image(imgname, image)
+                link = image
+                logger.info('[movie image]%s' % image)
                 if link:
                     imageLinks.append(link) 
             except IOError:        
                 continue
-        ml.images = ";".join(imageLinks)
-        ml.images_loaded = True
-        ml.save()
+        #ml.images = ";".join(imageLinks)
+        #ml.images_loaded = True
+        #ml.save()
     
     return render_to_response('btfactory/movie.html', locals())
 
@@ -337,6 +340,7 @@ def confirmMovie(request, movie_id):
     return HttpResponseRedirect("/btfactory/"+str(ml.daily_link.id)+"/daily/")
 
 def dailymovie(request, daily_id):        
+    logger.info('request for daily moviews.')
     dl = get_object_or_404( DailyLink, pk=daily_id)
     movielinks = MovieLink.objects.filter(daily_link=dl).order_by('-id')[:100]    
 
