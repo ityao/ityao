@@ -1,10 +1,28 @@
 {% extends "registration/registration_base.html" %}
 {% block title %}{% if account %}Activation complete{% else %}Activation problem{% endif %}{% endblock %}
 {% block content %}
-{% if account %}
-Thanks {{ account }}, activation complete!  You may now <a href='{% url auth_login %}'>login</a> using the username and password you set at registration.
-{% else %}
-Oops &ndash; it seems that your activation key is invalid.  Please check the url again.
-{% endif %}
+
+<div class="page-header">
+<h2 class="offset3">激活</h2>
+</div>
+
+            {% if account %}
+            <div class="row">
+                <p>激活成功，欢迎{{ account }}加入！赶快<a href="{% url auth_login %}">登陆</a>寻找你喜欢的演员。</p>
+            </div>
+            {% else %}
+            <div class="row">
+                <div class="alert-message warning span10 offset2">
+                    <a class="close" href="#"> x </a>
+                    <p>激活码无效！请检查激活码正确或过期。</p>
+                </div>
+            </div> <!-- /row -->
+                <div class="row">
+                    <div class="offset-one-third">
+                        <a href="/">返回首页</a>
+                    </div>
+                </div>
+            {% endif %}
+
 {% endblock %}
 

@@ -1,18 +1,174 @@
 <!DOCTYPE html>
 {% load fujin8_tags %}
 <html lang="zh_cn">
-	<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
-		<title>宅男吧 －{% block title %}发掘你身边有趣的事情！{% endblock %}</title>
-		<meta name="description" content="附近吧，找出你身边的乐子." ></meta>
-		<meta name="keywords" content="微薄, 图片, 视频, 美女" ></meta>
-		<meta name="copyright" content="Copyright © 2011 宅男战团"></meta>
-		<link rel="stylesheet" type="text/css" href="/media/css/base.css" />
-		<link rel="stylesheet" type="text/css" href="/media/css/site.css" />
-		<link rel="shortcut icon" href="/media/css/favicon.ico" />
-		{% block head_javascript_page %}{% endblock %}
-		{% block head_css_page %}{% endblock %}
-		<script type="text/javascript">
-		
+  <head>
+    <meta charset="utf-8">
+    <title>宅男吧 －{% block title %}发掘你身边有趣的事情！{% endblock %}</title>
+    <meta name="description" content="附近吧，找出你身边的乐子." ></meta>
+    <meta name="keywords" content="微薄, 图片, 视频, 美女" ></meta>
+    <meta name="copyright" content="Copyright © 2011 宅男战团"></meta>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/media/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      /* Override some defaults */
+      html, body {
+        background-color: #eee;
+      }
+      body {
+        padding-top: 40px; /* 40px to make the container go all the way to the bottom of the topbar */
+        color: #FF0099;
+      }
+      .container > footer p {
+        text-align: center; /* center align it with the container */
+      }
+      .container {
+        width: 820px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
+      }
+
+      /* The white background content wrapper */
+      .content {
+        background-color: #fff;
+        padding: 20px;
+        margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+        -webkit-border-radius: 0 0 6px 6px;
+           -moz-border-radius: 0 0 6px 6px;
+                border-radius: 0 0 6px 6px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+                box-shadow: 0 1px 2px rgba(0,0,0,.15);
+      }
+
+      /* Page header tweaks */
+      .page-header {
+        background-color: #f5f5f5;
+        padding: 20px 20px 10px;
+        margin: -20px -20px 20px;
+      }
+
+      /* Styles you shouldn't keep as they are for displaying this base example only */
+      /*.content .span10,
+      .content .span4 {
+        min-height: 500px;
+      }*/
+      /* Give a quick and non-cross-browser friendly divider */
+      /*.content .span4 {
+        margin-left: 0;
+        padding-left: 19px;
+        border-left: 1px solid #eee;
+      }*/
+
+      .topbar .btn {
+        border: 0;
+      }
+
+    .topbar-inner, .topbar .fill, .topbar div > ul .active > a, .nav .active > a {
+        background-color: #FFFFFF;
+
+        background-repeat: repeat-x;
+        background-image: -khtml-gradient(linear, left top, left bottom, from(#FFFFFF), to(#E6E6E6));
+        background-image: -moz-linear-gradient(top, #FFFFFF, #E6E6E6);
+        background-image: -ms-linear-gradient(top, #FFFFFF, #E6E6E6);
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FFFFFF), color-stop(100%, #E6E6E6));
+        background-image: -webkit-linear-gradient(top, #FFFFFF, #E6E6E6);
+        background-image: -o-linear-gradient(top, #FFFFFF, #E6E6E6);
+        background-image: linear-gradient(top, #FFFFFF, #E6E6E6);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#E6E6E6', GradientType=0);
+        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .alert-message p, #page-header1, #actress_search_input {
+        text-align: center;
+    }
+
+    .topbar a {
+        color: #000;
+    }
+
+    .topbar h3 a, .topbar .brand {
+        color: #000000;
+    }
+
+
+    .topbar div > ul .active > a, .nav .active > a {
+        color: #FF0099;
+    }
+    .topbar div > ul a:hover, .nav a:hover {
+        color: #FF0099;
+    }
+    </style>
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/media/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/media/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/media/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/media/images/apple-touch-icon-114x114.png">
+    {% block extra_js %}{% endblock %}
+    {% block extra_css %}{% endblock %}
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="#">宅男吧</a>
+          <ul class="nav">
+            <li class="{% active request.path "^/$" %}"><a href="/">首页</a></li>
+            <li><a href="/btfactory/new/">新片</a></li>
+            {% if user.is_authenticated %}
+            <li>
+                <a href="index.html" id="nav_home" accesskey="h">{{ user.username }}的订阅</a>
+            </li>
+            {% endif %}
+          </ul>
+          <!--<form action="" class="pull-right">
+            <input class="input-small" type="text" placeholder="Username">
+            <input class="input-small" type="password" placeholder="Password">
+            <button class="btn" type="submit">Sign in</button>
+          </form>-->
+          <div class="pull-right">
+            <ul class="nav">
+                {% if user.is_authenticated %}
+                    {% if user.is_staff %}
+                        <li><a href="{% url daily_film_auth %}" class="{% active request.path "^/btfactory/daily/$" %}">每日管理</a></li>
+                    {% endif %}
+                    {% if user.is_superuser %}
+                        <li><a href="/admin/" target="_blank">后台管理</a></li>
+                    {% endif %}
+                    <li><a href="/accounts/password/change/" class="{% active request.path "^/accounts/password/change/$" %}">修改密码</a></li>
+                    <li><a href="/accounts/logout?next=/">登出</a></li>
+                {% else %}
+                    <li><a class="{% active request.path "^/accounts/login/$" %}" href="/accounts/login">登陆</a></li>
+                    <li><a class="{% active request.path "^/accounts/register/$" %}" href="/accounts/register">注册</a></li>
+                {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+        <div class="content">
+        {% block content %}{% endblock %}
+        </div> <!-- /content -->
+        
+        <footer>
+            <p>&copy; 宅男吧 2011</p>
+        </footer>
+
+    </div> <!-- /container -->
+
+<script type="text/javascript">
+        
  var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-25815783-1']);
   _gaq.push(['_trackPageview']);
@@ -23,58 +179,6 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-		</script>
-	</head>
-	<body>
-		<header id="top">
-			<div>
-				<nav id="mainnav">
-					<ul>
-						<li>
-							<a href="/" id="nav_home" class="{% active request.path "^/$" %}" >首页</a>
-						</li>						
-						<li>
-							<a href="{% url new_film%}" id="nav_home" class="{% active request.path "^/btfactory/new/$" %}" accesskey="h">新片</a>
-						</li>
-						{% if user.is_authenticated %}
-						<li>
-							<a href="index.html" id="nav_home" accesskey="h">{{ user.username }}的订阅</a>
-						</li>
-						{% endif %}
-					</ul>
-				</nav>
-				<nav id="usernav">
-					<ul>						
-						<li>
-						{% if user.is_authenticated %}				
-							{% if user.is_staff %}
-								<a href="{% url daily_film_auth %}" class="{% active request.path "^/btfactory/daily/$" %}" >每日管理</a>
-							{% endif %}
-							{% if user.is_superuser %}
-								<a href="/admin">后台管理</a>
-							{% endif %}			
-							<a class="{% active request.path "^/accounts/password/change/$" %}" href="/accounts/password/change/">修改密码</a>
-							<a href="/accounts/logout?next=/">退出</a>
-						{% else %}						
-							<a class="{% active request.path "^/accounts/login/$" %}" href="/accounts/login">登陆</a>						
-							<a class="{% active request.path "^/accounts/register/$" %}" href="/accounts/register">注册</a>
-						{% endif %}
-						</li>					
-					</ul>	
-				</nav>
-			</div>
-		</header>
-		<article id="main_content">
-		{% block content %} {% endblock %}
-		</article>
-		<footer>
-			宅男吧  &copy;2011			
-		</footer>
-		{% block sidebar %}{% endblock %}
-		<!--
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
-		-->		
-		{% block footer_javascript_page %}{% endblock %}		
-		
-	</body>	
+</script>
+  </body>
 </html>

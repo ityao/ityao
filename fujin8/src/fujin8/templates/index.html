@@ -1,43 +1,24 @@
 {% extends "base.html" %}
 {% block title %}宅是一种文化{% endblock title %}
-{% block body_header_title %}{% endblock body_header_title %}
-{% block head_css_page %}
-{% endblock head_css_page %}
-{% block head_javascript_page %}
-<script language="JavaScript" type="text/javascript">
-</script>
-{% endblock head_javascript_page %}
-{% block footer_javascript_page %}
-{% endblock footer_javascript_page %}
-{% block body_class %}home{% endblock body_class %}
 {% block content %}
 
-<section id="searchform">
-	<h1>寻找你喜欢的女演员，关注她之后有新片将立即发种子到你邮箱方便你下载！</h1>
-	<div >		
-		<form method="post" action="">			
-				<label>演员名:</label>
-				{{ form.actress }}
-				<input type="submit" value="检 索"  />			
-		</form>
-	</div>
-</section >	
+            <div class="page-header" id="page-header1">
+                <h1>寻找并关注<small>你喜欢的女演员，新片种子自动发送到你邮箱！</small></h1>
+            </div>
 
-<section >	
-{% if atresses %}    
-    {% for actress in atresses %}	
-	<div class="star-box">
-		<img alt="{{actress.name}}" title="{{actress.name}}" src="{{actress.photo}}">
-		<div class="star-info">
-			<a class="u"  href="/btfactory/actress/{{actress.id}}">关注</a>					
-			<span class="actress_name">{{actress.name}}</span>
-			<br/>
-			<span class="coname">{{actress.co_names}}</span>
-		</div>
-	</div>
-	{% endfor %}
-{% else %}
-    <h1>很抱歉，找不到你要的演员，请试试用繁体中文，或者缩小搜索字符范围！</h1>
-{% endif %}
-</section>
-{% endblock content %}
+            <div class="row">
+                <div class="alert-message warning span10 offset2">
+                    <a class="close" href="#"> x </a>
+                    <p>很抱歉，找不到你要的演员，请试试用繁体中文，或者缩小搜索字符范围！</p>
+                </div>
+            </div> <!-- /row -->
+
+            <div class="row">
+                <div class="clearfix span12 offset1">
+                    <!--<label for="xlInput">演员名：   </label>-->
+                    <div class="input" id="actress_search_input">
+                        <input id="id_actress" type="text" name="actress" placeholder="输入演员名" class="xlarge">       <input class="btn large" type="submit" value="检索">
+                    </div>
+                </div>
+            </div> <!-- /row -->
+{% endblock %}

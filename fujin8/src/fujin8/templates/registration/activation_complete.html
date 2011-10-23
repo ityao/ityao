@@ -2,9 +2,14 @@
 {% block title %}帐号激活成功{% endblock %}
 {% block content %}
 
-<div id="inputform" style="background-image: url(/media/css/activemail.jpg);height: 400px; width:650px">	
-	<h1>帐号激活成功</h1>
-	<h2>请用你的用户名和密码进行 <a href='{% url auth_login %}' class="u">登陆</a></h2>	
+<div class="page-header">
+<h3 class="offset3">帐号激活成功</h3>
+</div>
+
+<div class="row">
+    <div class="offset-one-third">
+        赶快用你的用户名和密码<a href="{% url auth_login %}">登陆</a>
+    </div>
 </div>
 
 {% endblock %}

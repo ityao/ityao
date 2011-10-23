@@ -1,47 +1,59 @@
 {% extends "base.html" %}
 {% block title %}演员解析结果{% endblock %}
-{% block content %}
-{% if dl %}
-	<p>标题{{dl.id}}--<a href="{{dl.link}}">{{dl.label}}</a></p>
-{% else %}
-    <p>没主题</p>
-{% endif %}
+{% block extra_js %}
+    <script src="/media/js/jquery-1.6.4.min.js" type="text/javascript"></script>
+    <script src="/media/js/jquery.lazyload-1.5.0.js" type="text/javascript"></script>
+    <script src="/media/shadowbox-3.0.3/shadowbox.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(
+            function($){
+                
+                $("img").lazyload({
+                    placeholder: "/media/images/white.gif",
+                    effect: "fadeIn"
+                });
+        });
+    </script>
 
-{% if movielinks %}    
-    {% for movielink in movielinks %}
-    <ul>
-    	<form action="/btfactory/movie/{{ movielink.id }}/confirm/" method="post">
-    	<li>
-    	{% if not movielink.parsed %}
-			<p style="color:red">
-		{% else %}
-    		<p>
-		{% endif %}
-        {{movielink.title}}
-        	</p>
-        </li>
-        {% if not movielink.parsed %}
-			<li>演员名称：<input type="" name="actress" value="{{movielink.actress_names}}" maxlength="50" /> <input type="submit" value="确认" /> (多个名字用分号;隔开)</li>
-		{% else %}
-    		<li>演员名称：{{movielink.actress_names}}</li>
-		{% endif %}        
-        <li>剧照：        	
-        	<nobr>
-        	{% for image in movielink.getImages %}
-    			<img src="{{image}}" style="max-height: 400"/>
-			{% endfor %}
-			</nobr>				
-        </li>
-        <li>下载链接：        	
-        	{% for link in movielink.getLinks %}
-        		<A href="{{link}}" target=_blank >{{link}}</A>    			
-			{% endfor %}				
-        </li>        
-        <li>**************************</li>        
-        </form>
-    </ul>    
-    {% endfor %}
-{% else %}
-    <p>No movie links are available.</p>
-{% endif %}
+<script type="text/javascript">
+Shadowbox.init();
+</script>
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="/media/shadowbox-3.0.3/shadowbox.css">
+{% endblock %}
+{% block content %}
+
+    <div class="breadcrumb">{% if dl %}
+        <span class="label">标题 {{dl.id}}</span><a href="{{dl.link}}">{{dl.label}}</a>
+    {% else %}
+        无主题
+    {% endif %}</div>
+
+{% for movielink in movielinks %}
+<div class="well">
+
+    <p><span class="label {%if not movielink.parsed %}notice{%endif%}">{{movielink.title}}</span></p>
+        {% if not movielink.parsed%}
+        <form><input type="text" placeholder="演员名称" name="actress" value="{{movielink.actress_names}}" /><input type="submit" value="确认" class="btn" /> (多个名字用分号;隔开)</form>
+        {%else%}
+            演员名称：{{movielinks.actress_names}}
+        {%endif%}
+        <h4>剧照</h4>
+        {% for image in movielink.getImages %}
+            <ul class="media-grid">
+                <li>
+                    <a href="{{image}}" rel="shadowbox"><img class="thumbnail" src="{{ image }}" width="210" height="150" alt="图片较大，喝杯水吧。" /></a>
+                </li>
+            </ul>
+        {% endfor %}
+        <h4>下载链接</h4>
+        {% for link in movielink.getLinks %}
+            <p><a href="{{link}}" target="_blank">{{link}}</a></p>
+        {% endfor %}
+</div>
+{% endfor %}
+
+
+
 {% endblock %}

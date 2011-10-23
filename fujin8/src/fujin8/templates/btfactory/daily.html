@@ -2,20 +2,19 @@
 {% block title %}每日片子审核{% endblock %}
 {% block content %}
 
-	{% if parsed_daily_list %}
-	    <ul>
-	    {% for dailyinfo in parsed_daily_list %}
-	        <li>
-	        	<a class="u gC" href="{{ dailyinfo.daily.link }}">{{ dailyinfo.daily.label }}</a>
-	        	&nbsp;&nbsp;&nbsp;
-	        	<a href="/btfactory/{{dailyinfo.daily.id}}/daily" class="u">
-	        		({{dailyinfo.confirmed}}/{{dailyinfo.loaded}}/{{dailyinfo.count}})
-	        	</a>
-	        </li>
-	    {% endfor %}
-	    </ul>
-	{% else %}
-	    <p>No daily links are available.</p>
-	{% endif %}
+{% if parsed_daily_list %}
+    {% for dailyinfo in parsed_daily_list %}
+    <div class="breadcrumb">
+        <!--<div class="offset1">-->
+            <a href="{{dailyinfo.daily.link}}">{{dailyinfo.daily.label}}</a>&nbsp;&nbsp;&nbsp;&nbsp; 
+            <span class="label success"><a href="/btfactory/{{dailyinfo.daily.id}}/daily/">{{dailyinfo.confirmed}} / {{dailyinfo.loaded}} / {{dailyinfo.count}}</a></span>
+        <!--</div>-->
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="row">
+        <div class="offset-one-third">No daily links are available.</div>
+    </div>
+{% endif %}
 
 {% endblock %}

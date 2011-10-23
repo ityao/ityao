@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 {% block title %}演员解析结果{% endblock %}
 {% block content %}
-<p>Totally parsed {{count}} actress.</p>
+
+<div class="page-header">
+    <h3 class="offset-one-third">演员解析结果</div>
+</div>
+
+<div class="row">
+    <div class="offset-one-third">本次共解析 {{ count }} 个演员。</div>
+</div>
 {% endblock %}

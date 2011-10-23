@@ -211,16 +211,15 @@ def moviethumbcron(request):
             count = count + 1
             imgname = str(ml.digestkey)+"_"+str(count)
             try: 
-                #link = create_resized_image(imgname, image)
-                link = image
-                logger.info('[movie image]%s' % image)
+                logger.info('[movie image]%s | %s' % (imgname, image))
+                link = create_resized_image(imgname, image)
                 if link:
                     imageLinks.append(link) 
             except IOError:        
                 continue
-        #ml.images = ";".join(imageLinks)
-        #ml.images_loaded = True
-        #ml.save()
+        ml.images = ";".join(imageLinks)
+        ml.images_loaded = True
+        ml.save()
     
     return render_to_response('btfactory/movie.html', locals())
 
